@@ -18,3 +18,8 @@ $uri = "https://api.powerbi.com/v1.0/myorg/groups/$GroupId/datasets/$DatasetId/r
 Invoke-RestMethod -Uri $uri –Headers $headers –Method POST –Verbose
 
 Disconnect-PowerBIServiceAccount
+
+
+# Check the refresh history
+$uri = "https://api.powerbi.com/v1.0/myorg/groups/$GroupId/datasets/$DatasetId/refreshes?$top=2"
+Invoke-RestMethod -Uri $uri –Headers $headers –Method GET –Verbose | ConvertTo-Json | ConvertFrom-Json | Select -ExpandProperty value | Select id, refreshType, startTime, endTime, status
